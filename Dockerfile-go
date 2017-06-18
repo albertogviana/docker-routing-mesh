@@ -1,0 +1,14 @@
+FROM golang:alpine
+
+ENV APP_VERSION 2.0.0
+
+WORKDIR /go/src/docker-routing-mesh
+COPY . .
+
+RUN go build -o docker-routing-mesh
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=10s CMD wget -qO- localhost:8080/health
+
+CMD /go/src/docker-routing-mesh/docker-routing-mesh
